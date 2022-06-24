@@ -3,8 +3,14 @@
 static int window_loop(void *ptr)
 {
     t_prm *prm;
+	t_mlx *mlx;
+
     prm = ((t_prm *) ptr);
+	mlx = prm->mlx;
 	wolf3d(prm);
+	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->image_ptr, 0, 0);
+	bzero(prm->mlx->image_add, screenWidth * screenHeight * sizeof(int));
+	mlx_do_sync(mlx->mlx_ptr);
     return (0);
 }
 
@@ -14,8 +20,8 @@ void create_window(t_prm *prm)
 
     mlx = prm->mlx;
     mlx->mlx_ptr = mlx_init();
-	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, 1280, 1280, "win");
-	mlx->image_ptr = mlx_new_image(mlx->mlx_ptr, 1280, 1280);
+	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, screenWidth, screenHeight, "win");
+	mlx->image_ptr = mlx_new_image(mlx->mlx_ptr, screenWidth, screenHeight);
 	mlx->image_add = \
 	mlx_get_data_addr(mlx->image_ptr, &mlx->bpp, &mlx->size_line, &mlx->erdian);
 	mlx_loop_hook(mlx->mlx_ptr, window_loop, prm);

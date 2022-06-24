@@ -1,5 +1,17 @@
 #include "wolf3d.h"
 
+static void default_math(t_math *math)
+{
+    math->posxy[X] = 22;
+    math->posxy[Y] = 12;
+    math->dirxy[X] = -1;
+    math->dirxy[Y] = 0;
+    math->planexy[X] = 0;
+    math->planexy[Y] = 0.66;
+    math->time = 0;
+    math->oldtime = 0;
+}
+
 int main()
 {
     int defaultMap[mapWidth][mapHeight]=
@@ -32,11 +44,17 @@ int main()
     t_prm prm;
     t_mlx mlx;
     t_math math;
+    time_t now = time(NULL);
 
+    ft_bzero(&prm, sizeof(t_prm));
+    ft_bzero(&mlx, sizeof(t_mlx));
+    ft_bzero(&math, sizeof(t_math));
     math.worldmap = &defaultMap;
     prm.math = &math;
     prm.mlx = &mlx;
-    printf("22 1 is %d\n", (*math.worldmap)[22][0]);
-    //create_window(&prm);
+    math.oldtime = now;
+    printf("22 1 is %d\n", math.time);
+    default_math(&math);
+    create_window(&prm);
     return (0);
 }
