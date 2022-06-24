@@ -2,7 +2,8 @@
 
 int keyboard_input(int key, void *ptr)
 {
-    if (key == 9)
+    printf("key is %d\n", key);
+    if (key == 65307)
         exit(0);
     return (0);
 }

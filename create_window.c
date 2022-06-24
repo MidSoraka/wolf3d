@@ -4,7 +4,7 @@ static int window_loop(void *ptr)
 {
     t_prm *prm;
     prm = ((t_prm *) ptr);
-
+	wolf3d(prm);
     return (0);
 }
 

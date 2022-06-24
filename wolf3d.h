@@ -4,10 +4,21 @@
 # include "stdio.h"
 # include "mlx/Linux/mlx.h"
 
+#define mapWidth 24
+#define mapHeight 24
+#define screenWidth 640
+#define screenHeight 480
+
 typedef struct s_prm
 {
-	struct s_mlx		*mlx;
+	struct s_math	*math;
+	struct s_mlx	*mlx;
 }				t_prm;
+
+typedef struct s_math
+{
+	int			(*worldmap)[mapWidth][mapHeight];
+}				t_math;
 
 typedef struct s_mlx
 {
