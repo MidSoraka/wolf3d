@@ -44,7 +44,7 @@ int main()
     t_prm prm;
     t_mlx mlx;
     t_math math;
-    time_t now = time(NULL);
+    clock_t now = clock();
 
     ft_bzero(&prm, sizeof(t_prm));
     ft_bzero(&mlx, sizeof(t_mlx));
@@ -53,7 +53,7 @@ int main()
     prm.math = &math;
     prm.mlx = &mlx;
     math.oldtime = now;
-    printf("22 1 is %d\n", math.time);
+   // printf("22 1 is %f\n", math.time);
     default_math(&math);
     create_window(&prm);
     return (0);

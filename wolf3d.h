@@ -43,12 +43,13 @@ typedef struct	s_math
 	int			drawend;
 	int			h; //change this
 	int			color;
-	int			time;
-	int			oldtime;
+	double		time;
+	double		oldtime;
 	int			frames;
 	double		frametime;
 	double		movespeed;
 	double		rotspeed;
+	clock_t		deltatime;
 }				t_math;
 
 typedef struct	s_mlx

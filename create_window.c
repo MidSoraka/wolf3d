@@ -7,9 +7,9 @@ static int window_loop(void *ptr)
 
     prm = ((t_prm *) ptr);
 	mlx = prm->mlx;
+	bzero(prm->mlx->image_add, screenWidth * screenHeight * sizeof(int));
 	wolf3d(prm);
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->image_ptr, 0, 0);
-	bzero(prm->mlx->image_add, screenWidth * screenHeight * sizeof(int));
 	mlx_do_sync(mlx->mlx_ptr);
     return (0);
 }
