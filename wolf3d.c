@@ -114,6 +114,46 @@ static void raycasting(t_prm *prm, int x)
     if(math->drawend >= math->h)
         math->drawend = math->h - 1;
 
+    //texturing calculations
+    int texNum = (*math->worldmap)[math->mapxy[X]][math->mapxy[Y]] - 1; //1 subtracted from it so that texture 0 can be used!
+
+    //calculate value of wallX
+    double wallX; //where exactly the wall was hit
+    if (math->side == 0)
+        wallX = math->posxy[Y] + math->perpwalldist * math->raydirxy[Y];
+    else
+        wallX = math->posxy[X] + math->perpwalldist * math->raydirxy[X];
+    wallX -= floor((wallX)); // floor is used to convert double to integer or at least closer to integer
+
+    //x coordinate on the texture
+    int texX = ((int)(wallX * ((double)(texWidth))));
+    if(math->side == 0 && math->raydirxy[X] > 0)
+        texX = texWidth - texX - 1;
+    if(math->side == 1 && math->raydirxy[Y] < 0)
+        texX = texWidth - texX - 1;
+
+    // How much to increase the texture coordinate per screen pixel
+    double step = 1.0 * texHeight / math->lineheight;
+    // Starting texture coordinate
+    double texPos = (math->drawstart - math->h / 2 + math->lineheight / 2) * step;
+    int y = math->drawstart;
+
+    printf("\n\ntesting99\n\n");
+    while (y < math->drawend)
+    {
+        int texY = (int)texPos & (texHeight - 1);
+        texPos += step;
+        math->color = math->texture[texNum][texHeight * texY + texX];
+        //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
+        if(math->side == 1)
+            math->color = (math->color >> 1) & 8355711;
+      //  math->color = 128 + 256 * 128 + 65536 * 128;
+        ((unsigned int *)prm->mlx->image_add)[((prm->mlx->size_line / 4) * y + x)] = math->color;
+        //buffer[y][x] = color;
+        y++;
+    }
+    printf("\n\ntesting88\n\n");
+    /*
     //choose wall color
     switch((*math->worldmap)[math->mapxy[X]][math->mapxy[Y]])
     {
@@ -146,7 +186,7 @@ static void raycasting(t_prm *prm, int x)
         else
             drawline(x, math->drawstart, x, math->drawend, prm);
     }*/
-    drawline(x, math->drawstart, x, math->drawend, prm);
+    //drawline(x, math->drawstart, x, math->drawend, prm);
 }
 
 void wolf3d(t_prm *prm)

@@ -27,5 +27,6 @@ void create_window(t_prm *prm)
 	mlx_loop_hook(mlx->mlx_ptr, window_loop, prm);
 	mlx_key_hook(mlx->win_ptr, keyboard_input, prm);
 	mlx_mouse_hook(mlx->win_ptr, mouse_input, prm);
+	printf("\n\ntesting12\n\n");
 	mlx_loop(mlx->mlx_ptr);
 }

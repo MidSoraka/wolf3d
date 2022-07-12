@@ -11,10 +11,12 @@
 #define X 0
 #define Y 1
 #define Z 2
-#define mapWidth 24
+#define mapWidth 24 // all of these defines should be on caps
 #define mapHeight 24
 #define screenWidth 640
 #define screenHeight 480
+#define texWidth 64
+#define texHeight 64
 
 typedef struct	s_prm
 {
@@ -42,7 +44,7 @@ typedef struct	s_math
 	int			drawstart;
 	int			drawend;
 	int			h; //change this
-	int			color;
+	unsigned int			color;
 	double		time;
 	double		oldtime;
 	int			frames;
@@ -50,6 +52,7 @@ typedef struct	s_math
 	double		movespeed;
 	double		rotspeed;
 	clock_t		deltatime;
+	unsigned int			texture[8][texHeight * texWidth];
 }				t_math;
 
 typedef struct	s_mlx
