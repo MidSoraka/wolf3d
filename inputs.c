@@ -8,23 +8,23 @@ int keyboard_input(int key, void *ptr)
     prm = ((t_prm *) ptr);
     math = prm->math;
     printf("key is %d\n", key);
-    if (key == 65307)
+    if (key == KEY_ESC)
         exit(0);
-    else if (key == 65362) // up
+    else if (key == KEY_UP) // up
     {
         if((*math->worldmap)[(int)(math->posxy[X] + math->dirxy[X] * math->movespeed)][(int)math->posxy[Y]] == 0) 
             math->posxy[X] += math->dirxy[X] * math->movespeed;
         if((*math->worldmap)[(int)(math->posxy[X])][(int)(math->posxy[Y] + math->dirxy[Y] * math->movespeed)] == 0)
             math->posxy[Y] += math->dirxy[Y] * math->movespeed;
     }
-    else if (key == 65364) // down
+    else if (key == KEY_DOWN) // down
     {
         if((*math->worldmap)[(int)(math->posxy[X] - math->dirxy[X] * math->movespeed)][(int)(math->posxy[Y])] == 0)
             math->posxy[X] -= math->dirxy[X] * math->movespeed;
         if((*math->worldmap)[(int)(math->posxy[X])][(int)(math->posxy[Y] - math->dirxy[Y] * math->movespeed)] == 0)
             math->posxy[Y] -= math->dirxy[Y] * math->movespeed;
     }
-    else if (key == 65363) // right
+    else if (key == KEY_RIGHT) // right
     {
         double oldDirX = math->dirxy[X];
         math->dirxy[X] = math->dirxy[X] * cos(-math->rotspeed) - math->dirxy[Y] * sin(-math->rotspeed);
@@ -33,7 +33,7 @@ int keyboard_input(int key, void *ptr)
         math->planexy[X] = math->planexy[X] * cos(-math->rotspeed) - math->planexy[Y] * sin(-math->rotspeed);
         math->planexy[Y] = oldPlaneX * sin(-math->rotspeed) + math->planexy[Y] * cos(-math->rotspeed);
     }
-    else if (key == 65361) // left
+    else if (key == KEY_LEFT) // left
     {
         //both camera direction and camera plane must be rotated
         double oldDirX = math->dirxy[X];

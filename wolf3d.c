@@ -138,7 +138,6 @@ static void raycasting(t_prm *prm, int x)
     double texPos = (math->drawstart - math->h / 2 + math->lineheight / 2) * step;
     int y = math->drawstart;
 
-    printf("\n\ntesting99\n\n");
     while (y < math->drawend)
     {
         int texY = (int)texPos & (texHeight - 1);
@@ -152,7 +151,6 @@ static void raycasting(t_prm *prm, int x)
         //buffer[y][x] = color;
         y++;
     }
-    printf("\n\ntesting88\n\n");
     /*
     //choose wall color
     switch((*math->worldmap)[math->mapxy[X]][math->mapxy[Y]])
@@ -171,7 +169,6 @@ static void raycasting(t_prm *prm, int x)
     }
 
     //draw the pixels of the stripe as a vertical line
-    /*
     if (abs(math->drawend - math->drawstart) < abs(x - x))
     {
         if (x > x)

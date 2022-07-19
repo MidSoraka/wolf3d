@@ -4,9 +4,15 @@
 # include "stdio.h"
 # include "mlx/Linux/mlx.h"
 # include "libft/libft.h"
-# include <math.h>
+# include <math.h> //code is using abs replace them with fabs or create your own abs function
 # include <time.h>
+#include <png.h>
 
+# define KEY_ESC 53
+# define KEY_RIGHT 124
+# define KEY_LEFT 123
+# define KEY_UP 126
+# define KEY_DOWN 125
 #define INT_MAX 2147483647
 #define X 0
 #define Y 1
@@ -53,6 +59,7 @@ typedef struct	s_math
 	double		rotspeed;
 	clock_t		deltatime;
 	unsigned int			texture[8][texHeight * texWidth];
+	int	pngtex[texHeight * texWidth * 26];
 }				t_math;
 
 typedef struct	s_mlx
