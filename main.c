@@ -56,11 +56,45 @@ static void read_texture(t_math *math)
 		x++;
 	}
 }
+while (y < texHeight)
+    {
+        x = 0;
+        while (x < texWidth)
+		{
+			//ptr = &(math->pngtex[pos + texHeight * y + x]);
+			printf("___________________________________________________________________\n");
+			if (x != 0)
+			{
+				math->pngtex[pos] = math->pngtex[pos] + prev_color[0];
+				math->pngtex[pos + 1] = math->pngtex[pos + 1] + prev_color[1];
+				math->pngtex[pos + 2] = math->pngtex[pos + 2] + prev_color[2];
+			}
+			math->texture[5][texHeight * y + x] = getIntFromColor(math->pngtex[pos], math->pngtex[pos + 1], math->pngtex[pos + 2]);
+			printf("\n\nr is %d, g is %d, b is %d\n\n", math->pngtex[pos], math->pngtex[pos + 1], math->pngtex[pos + 2]);
+			printf("get big edian returns %d\n", getIntFromColor(math->pngtex[pos], math->pngtex[pos + 1], math->pngtex[pos + 2]));
+			prev_color[0] = math->pngtex[pos];
+			prev_color[1] = math->pngtex[pos + 1];
+			prev_color[2] = math->pngtex[pos + 2];
+			pos += 3;
+			printf("____________________________TEST_________________________________\n");
+			printf("\n\nr is %d, g is %d, b is %d\n\n", math->pngtex[pos], math->pngtex[pos + 1], math->pngtex[pos + 2]);
+			if (x  == 4)
+				exit(0);
+			//printf("current point is %d\n", texHeight * y + x);
+		//	printf("%d\n", math->pngtex[texHeight * y + (x + pos)]);
+			//printf("get big edian returns %d", get_big_endian(ptr));
+			//exit(0);
+			x++;
+			printf("____________________________________________________________________\n");
+		}
+		y++;
+	}
     */
 
 static int getIntFromColor(int Red, int Green, int Blue)
 {
-    return (Blue * 65536 + Green * 256 + Red); //0xFF000000 for 100% Alpha. Bitwise OR everything together.
+	int	color = Red * 65536 + Green * 256 + Blue;
+    return (color); //0xFF000000 for 100% Alpha. Bitwise OR everything together.
 }
 
 static int get_big_endian(char *buf)
@@ -84,43 +118,58 @@ static void read_texture(t_math *math)
 	int	pos;
 	int	*ptr;
 	int i = 0;
-	int	res;
+	int	size;
+	uint8_t	prev_color[3];
+	int	color;
 	//char line[texHeight * texWidth * 16]; http://jeromebelleman.gitlab.io/posts/devops/libpng/
 
-	fd = open("pics/colorstone.png", fd);
+	fd = open("pics/colorstonekeepresolution.png", fd);
 	if (fd == -1)
 	{
 		printf("file error\n");
 		exit(0);
 	}
-	res = read(fd, math->pngtex, texHeight * texWidth);
-	pos = 8;
-	y = 0;
-	// x = 3 y = 0 color is = 4732952
-	while (math->pngtex[i])
+	ft_bzero(math->pngtex, texHeight * texWidth * 16);
+	size = read(fd, math->pngtex, texHeight * texWidth * 16);
+	close(fd);
+	while (i < 200)
 	{
 		printf("%d index is %d\n", math->pngtex[i], i);
 		i++;
 	}
-	printf("nubmer is %d\n", texHeight * texWidth);
-	exit(0);
+	printf("size is %d", size);
+	pos = 49;
+	pos = 70;
+	prev_color[0] = math->pngtex[pos];
+	prev_color[1] = math->pngtex[pos + 1];
+	prev_color[2] = math->pngtex[pos + 2];
+	prev_color[0] = 0;
+	prev_color[1] = 0;
+	prev_color[2] = 0;
+	y = 0;
 	while (y < texHeight)
     {
         x = 0;
         while (x < texWidth)
 		{
-			ptr = &(math->pngtex[pos + texHeight * y + x]);
-			math->texture[5][texHeight * y + x] = math->pngtex[texHeight * y + x];
-			//printf("current point is %d\n", texHeight * y + x);
-			printf("%d\n", math->pngtex[texHeight * y + (x + pos)]);
-			//printf("get big edian returns %d", get_big_endian(ptr));
-			//exit(0);
-			pos += 4;
+			color = getIntFromColor(math->pngtex[pos] + prev_color[0], math->pngtex[pos + 1] + prev_color[1], math->pngtex[pos + 2] + prev_color[2]);
+			if (y >= 2)
+				color = INT_MAX;
+			math->texture[5][y * texHeight + x] = color;
+			printf("\n\ncolor is %d\n\n", color);
+			printf("prevcolor is %d, %d, %d\n", prev_color[0], prev_color[1], prev_color[2]);
+			printf("Current color is %d, %d, %d x is %d\n", math->pngtex[pos], math->pngtex[pos + 1], math->pngtex[pos + 2], x);
+			prev_color[0] = math->pngtex[pos] + prev_color[0];
+			prev_color[1] = math->pngtex[pos + 1] + prev_color[1];
+			prev_color[2] = math->pngtex[pos + 2] + prev_color[2];
+			pos += 3;
+			if (y == 2)
+				exit(0);
 			x++;
 		}
+		pos++;
 		y++;
 	}
-	exit(0);
 }
 
 static void default_math(t_math *math)

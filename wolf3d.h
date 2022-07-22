@@ -6,7 +6,7 @@
 # include "libft/libft.h"
 # include <math.h> //code is using abs replace them with fabs or create your own abs function
 # include <time.h>
-#include <png.h>
+# include <stdint.h>
 
 # define KEY_ESC 53
 # define KEY_RIGHT 124
@@ -58,8 +58,8 @@ typedef struct	s_math
 	double		movespeed;
 	double		rotspeed;
 	clock_t		deltatime;
-	unsigned int			texture[8][texHeight * texWidth];
-	int	pngtex[texHeight * texWidth * 26];
+	int			texture[8][texHeight * texWidth];
+	int8_t	pngtex[texHeight * texWidth * 26];
 }				t_math;
 
 typedef struct	s_mlx
